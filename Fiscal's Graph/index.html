@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fiscal's Graph</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #122a41;
+      color: #FFFFFF;
+    }
+  
+    h1, h2 {
+      color: #FFFFFF;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+  
+    label, button {
+      color: #FFFFFF;
+      background-color: #0D1B26;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+  
+    button:hover {
+      cursor: pointer;
+      background-color: #0A141D;
+    }
+  
+    select, input[type="number"] {
+      color: #000000;
+      background-color: #FFFFFF;
+      border: none;
+      padding: 5px;
+      border-radius: 3px;
+    }
+  
+    button#addTransactionBtn {
+      background-color: #E44C65;
+      color: #FFFFFF;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  
+    button#addTransactionBtn:hover {
+      background-color: #C43150;
+    }
+  
+    canvas {
+      display: block;
+      margin: 0 auto;
+    }
+  
+    .chart-container {
+      background-color: #122a41; /* Set the background color to match the body */
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+  
+</head>
+<body>
+  <h1>Fiscal's Graph</h1>
+  
+  <div>
+    <label for="transactionType">Transaction Type:</label>
+    <select id="transactionType">
+      <option value="income">Income</option>
+      <option value="expense">Expense</option>
+    </select>
+    <label for="transactionLabel">Transaction Label:</label>
+    <select id="transactionLabel">
+      <option value="Paycheck">Paycheck</option>
+      <option value="Bonus">Bonus</option>
+      <option value="Savings">Savings</option>
+      <option value="Investment">Investment</option>
+      <option value="Commission">Commission</option>
+      <option value="Retirement">Retirement</option>
+      <option value="Social Security">Social Security</option>
+      <option value="Rental Property">Rental Property</option>
+      <option value="Gift">Gift</option>
+      <option value="Other">Other</option>
+      <option value="Rent">Rent</option>
+      <option value="Car">Car</option>
+      <option value="Food">Food</option>
+      <option value="Medical">Medical</option>
+      <option value="Utilities">Utilities</option>
+      <option value="Travel">Travel</option>
+      <option value="Transportation">Transportation</option>
+      <option value="Entertainment">Entertainment</option>
+    </select>
+    <label for="transactionAmount">Transaction Amount:</label>
+    <input type="number" id="transactionAmount">
+    <button id="addTransactionBtn" onclick="addTransaction()">Add Transaction</button>
+  </div>
+
+  <div>
+    <h2>Account Balance: <span id="accountBalance"></span></h2>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="transactionChart" width="800" height="400"></canvas>
+  </div>
+
+  <div>
+    <button onclick="navigateToTablePage()">View Transactions Table</button>
+    <button onclick="navigateToExportPage()">Export Transactions</button>
+    <button onclick="resetAll()">Reset All</button>
+  </div>
+
+  <script>
+    let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+    let accountBalance = JSON.parse(localStorage.getItem('accountBalance')) || 0;
+
+    const addTransaction = () => {
+      const typeSelect = document.getElementById('transactionType');
+      const labelSelect = document.getElementById('transactionLabel');
+      const amountInput = document.getElementById('transactionAmount');
+      const type = typeSelect.value;
+      const label = labelSelect.value;
+      const amount = Number(amountInput.value.trim());
+      const date = new Date().toLocaleDateString();
+
+      if (type && label && amount) {
+        if (type === 'income') {
+          accountBalance += amount;
+        } else if (type === 'expense') {
+          accountBalance -= amount;
+        }
+
+        transactions.push({ type, label, amount, date });
+        updateChart();
+        updateAccountBalance();
+        amountInput.value = '';
+
+        // Save transactions and account balance to local storage
+        localStorage.setItem('transactions', JSON.stringify(transactions));
+        localStorage.setItem('accountBalance', JSON.stringify(accountBalance));
+      }
+    };
+
+    const calculateCumulative = (data) => {
+      let cumulativeIncome = 0;
+      let cumulativeExpense = 0;
+      return data.map((transaction) => {
+        if (transaction.type === 'income') {
+          cumulativeIncome += transaction.amount;
+        } else {
+          cumulativeExpense += transaction.amount;
+        }
+        return { income: cumulativeIncome, expense: cumulativeExpense };
+      });
+    };
+
+    const updateChart = () => {
+      const ctx = document.getElementById('transactionChart').getContext('2d');
+
+      const labels = transactions.map((transaction) => `${transaction.date} - ${transaction.label}`);
+      const cumulativeAmounts = calculateCumulative(transactions);
+
+      const data = {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Income',
+            data: cumulativeAmounts.map((transaction) => transaction.income),
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 4, // Increased border width to make the line bolder
+            borderDash: [5, 5], // Added this line to create a dotted line
+            fill: false, // Changed from `true` to `false` to remove fill below the line
+          },
+          {
+            label: 'Expense',
+            data: cumulativeAmounts.map((transaction) => transaction.expense),
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 4, // Increased border width to make the line bolder
+            borderDash: [5, 5], // Added this line to create a dotted line
+            fill: false, // Changed from `true` to `false` to remove fill below the line
+          },
+        ],
+      };
+
+      if (window.chart) {
+        chart.data = data;
+        chart.update();
+      } else {
+        window.chart = new Chart(ctx, {
+          type: 'line',
+          data: data,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: (value) => value.toLocaleString(),
+                  color: '#FFFFFF', // Set tick color to white
+                },
+              },
+              x: {
+                ticks: {
+                  color: '#FFFFFF', // Set tick color to white
+                },
+              },
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  color: '#FFFFFF', // Set legend label color to white
+                },
+              },
+            },
+          },
+        });
+      }
+    };
+
+    const updateAccountBalance = () => {
+      const balanceSpan = document.getElementById('accountBalance');
+      balanceSpan.textContent = accountBalance.toLocaleString();
+      balanceSpan.style.color = '#FFFFFF'; // Set balance color to white
+    };
+
+    const navigateToTablePage = () => {
+      // Save transactions and account balance to local storage before navigating to the table page
+      localStorage.setItem('transactions', JSON.stringify(transactions));
+      localStorage.setItem('accountBalance', JSON.stringify(accountBalance));
+
+      // Navigate to the table page
+      window.location.href = 'transactions.html';
+    };
+
+    const navigateToExportPage = () => {
+      // Save transactions and account balance to local storage before navigating to the export page
+      localStorage.setItem('transactions', JSON.stringify(transactions));
+      localStorage.setItem('accountBalance', JSON.stringify(accountBalance));
+
+      // Navigate to the export page
+      window.location.href = 'export.html';
+    };
+
+    const resetAll = () => {
+      // Clear transactions and account balance from local storage
+      localStorage.removeItem('transactions');
+      localStorage.removeItem('accountBalance');
+
+      // Reset variables
+      transactions = [];
+      accountBalance = 0;
+
+      // Clear the chart and account balance display
+      const ctx = document.getElementById('transactionChart').getContext('2d');
+      if (window.chart) {
+        window.chart.destroy();
+        window.chart = null;
+      }
+      document.getElementById('accountBalance').textContent = '';
+    };
+
+    // Display initial data
+    updateChart();
+    updateAccountBalance();
+  </script>
+</body>
+</html>

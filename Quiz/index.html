@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz-App-JS</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/1ba2cf90f3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+    <section>
+
+        <header class="sign-in">
+
+            <h1>Sign in yourself</h1>
+
+            <form id="form-1">
+
+                <input type="text" name="username" placeholder="Enter your name">
+
+                <input type="number" name="userid" placeholder="Enter your id">
+
+                <button type="button" name="reg-btn">Submit <i class="fas fa-caret-right"></i> </button>
+
+            </form>
+
+        </header>
+
+        <main>
+
+            <div class="head">
+                <ul>
+                    <li class="userid"></li>
+                    <li class="username"></li>
+                    <li class="page">1/4</li>
+                </ul>
+            </div>
+
+            <div class="que-cont cont-1">
+
+                <div class="que que-1">
+                    <h1> &nbsp;<span>Q1-</span> &nbsp; &nbsp;Which of the following is NOT a recommended step in creating a budget?</h1>
+                    <ul>
+                        <li><button onclick="right_selection(value)" value="5">Spending money impulsively</button></li>
+                        <li><button onclick="wrong_selection()"> Tracking expenses</button></li>
+                        <li><button onclick="wrong_selection()">Setting financial goals</button></li>
+                        <li><button onclick="wrong_selection()">Allocating funds for savings</button></li>
+                    </ul>
+                </div>
+
+                <div class="que que-2">
+                    <h1> &nbsp;<span>Q2-</span> &nbsp; &nbsp;What is the recommended percentage of your income to allocate towards savings each month?</h1>
+                    <ul>
+                        <li><button onclick="wrong_selection()">20-25%</button></li>
+                        <li><button onclick="wrong_selection()"> 40-50%</button></li>
+                        <li><button onclick="wrong_selection()">75-80%</button></li>
+                        <li><button onclick="right_selection(value)" value="4">5-10%</button></li>
+                    </ul>
+                </div>
+                
+                <div class="que que-3">
+                    <h1> &nbsp;<span>Q3-</span> &nbsp; &nbsp;What is the purpose of an emergency fund?</h1>
+                    <ul>
+                        <li><button onclick="wrong_selection()">Funding luxury purchases</button></li>
+                        <li><button onclick="wrong_selection()">Paying off debts</button></li>
+                        <li><button onclick="wrong_selection()"> Investing in the stock market</button></li>
+                        <li><button onclick="right_selection(4)" value="4">Covering unexpected expenses</button></li>
+                    </ul>
+                </div>
+                
+                <div class="que que-4">
+                    <h1> &nbsp;<span>Q4-</span> &nbsp; &nbsp;Which of the following is a smart financial move to reduce debt?</h1>
+                    <ul>
+                        <li><button onclick="wrong_selection()"> Paying only the minimum payment on credit cards</button></li>
+                        <li><button onclick="right_selection(2)" value="2">Consolidating multiple debts into one loan</button></li>
+                        <li><button onclick="wrong_selection()">Ignoring debt collectors' calls</button></li>
+                        <li><button onclick="wrong_selection()">Applying for new credit cards</button></li>
+                    </ul>
+                </div>
+                
+                <div class="que que-5">
+                    <h1> &nbsp;<span>Q5-</span> &nbsp; &nbsp;What is the general rule of thumb when it comes to investing in stocks?</h1>
+                    <ul>
+                        <li><button onclick="wrong_selection()">Invest all your savings in stocks for maximum returns</button></li>
+                        <li><button onclick="wrong_selection()">Invest in only one stock for simplicity</button></li>
+                        <li><button onclick="wrong_selection()">void investing in stocks altogether</button></li>
+                        <li><button onclick="right_selection(7)" value="7days">Diversify your investments across different asset classes</button></li>
+                    </ul>
+                    <button class="sec-page-btn" >Next <i class="fas fa-caret-right"></i> </button>
+                </div>
+
+            </div>
+
+            <div class="que-cont cont-2">
+
+                <div class="que que-6">
+                    <h1> &nbsp;<span>Q6-</span> &nbsp; &nbsp;What is the recommended debt-to-income ratio for an individual's financial well-being?</h1>
+                    <ul>
+                        <li><button onclick="wrong_selection()">Above 100%</button></li>
+                        <li><button onclick="wrong_selection()">Exactly 75%</button></li>
+                        <li><button onclick="right_selection(12)" value="12months">Below 50%</button></li>
+                        <li><button onclick="wrong_selection()">No specific ratio applies</button></li>
+                    </ul>
+                </div>
+
+                <div class="que que-7">
+                    <h1> &nbsp;<span>Q7-</span> &nbsp; &nbsp;What is the advantage of having a good credit score?</h1>
+                    <ul>
+                        <li><button onclick="wrong_selection()">Higher interest rates on loans</button></li>
+                        <li><button onclick="wrong_selection()">Limited access to financial services</button></li>
+                        <li><button onclick="wrong_selection()">Higher insurance premiums</button></li>
+                        <li><button onclick="right_selection(4)" value="4years">Easier approval for loans and credit cards</button></li>
+                    </ul>
+                </div>
+                
+                <div class="que que-8">
+                    <h1> &nbsp;<span>Q8-</span> &nbsp; &nbsp;Which of the following is an example of a tax-deductible expense?</h1>
+                    <ul>
+                        <li><button onclick="right_selection(0)" value="0">Mortgage payment</button></li>
+                        <li><button onclick="wrong_selection()"> Gym membership</button></li>
+                        <li><button onclick="wrong_selection()"> Daily coffee purchases</button></li>
+                        <li><button onclick="wrong_selection()">Vacation expenses</button></li>
+                    </ul>
+                </div>
+                
+                <div class="que que-9">
+                    <h1> &nbsp;<span>Q9-</span> &nbsp; &nbsp;How can one protect their personal information and prevent identity theft?</h1>
+                    <ul>
+                        <li><button onclick="wrong_selection()">Sharing personal details on social media</button></li>
+                        <li><button onclick="wrong_selection()">Using the same password for all online accounts</button></li>
+                        <li><button onclick="wrong_selection()">Providing personal information to unsolicited phone callers</button></li>
+                        <li><button onclick="right_selection(50)" value="50">Keeping financial documents secure</button></li>
+                    </ul>
+                </div>
+                
+                <div class="que que-10">
+                    <h1> &nbsp;<span>Q10-</span> &nbsp; &nbsp;What is the purpose of diversifying investments?</h1>
+                    <ul>
+                        <li><button onclick="wrong_selection()">Maximizing returns</button></li>
+                        <li><button onclick="wrong_selection()">Avoiding taxes</button></li>
+                        <li><button onclick="right_selection(60)" value="60">Minimizing risk</button></li>
+                        <li><button onclick="wrong_selection()">Speculating on individual stocks</button></li>
+                    </ul>
+                    <button class="third-page-btn" >Next <i class="fas fa-caret-right"></i> </button>
+                </div>
+
+            </div>
+
+            <div class="que-cont cont-3">
+
+                <div class="que que-11">
+                    <h1> &nbsp;<span>Q11-</span> &nbsp; &nbsp;Which of the following is a potential risk associated with investing in real estate?</h1>
+                    <ul>
+                        <li><button onclick="right_selection(24)" value="24">Property market fluctuations</button></li>
+                        <li><button onclick="wrong_selection()">Passive income generation</button></li>
+                        <li><button onclick="wrong_selection()">Inflation protection</button></li>
+                        <li><button onclick="wrong_selection()">Guaranteed returns</button></li>
+                    </ul>
+                </div>
+
+                <div class="que que-12">
+                    <h1> &nbsp;<span>Q12-</span> &nbsp; &nbsp;What is the recommended strategy for long-term retirement savings?</h1>
+                    <ul>
+                        <li><button onclick="wrong_selection()">Cashing out retirement accounts early</button></li>
+                        <li><button onclick="right_selection(2)" value="2">Consistently contributing to retirement accounts over time</button></li>
+                        <li><button onclick="wrong_selection()">Investing exclusively in high-risk assets</button></li>
+                        <li><button onclick="wrong_selection()">Starting to save for retirement in your 40s</button></li>
+                    </ul>
+                </div>
+                
+                <div class="que que-13">
+                    <h1> &nbsp;<span>Q13-</span> &nbsp; &nbsp;Which of the following is an example of a fixed expense?</h1>
+                    <ul>
+                        <li><button onclick="wrong_selection()">Groceries</button></li>
+                        <li><button onclick="wrong_selection()">Entertainment</button></li>
+                        <li><button onclick="right_selection(12)" value="12">Mortgage payment</button></li>
+                        <li><button onclick="wrong_selection()">Shopping expenses</button></li>
+                    </ul>
+                </div>
+                
+                <div class="que que-14">
+                    <h1> &nbsp;<span>Q14-</span> &nbsp; &nbsp;How does inflation affect your purchasing power?</h1>
+                    <ul>
+                        <li><button onclick="wrong_selection()">Increases it</button></li>
+                        <li><button onclick="wrong_selection()">Has no impact</button></li>
+                        <li><button onclick="wrong_selection()">Depends on the type of goods purchased</button></li>
+                        <li><button onclick="right_selection(20)" value="20">Decreases it</button></li>
+                    </ul>
+                </div>
+                
+                <div class="que que-15">
+                    <h1> &nbsp;<span>Q15-</span> &nbsp; &nbsp;What is the recommended strategy for minimizing investment risk?</h1>
+                    <ul>
+                        <li><button onclick="wrong_selection()">Concentrating investments in a single asset class</button></li>
+                        <li><button onclick="wrong_selection()">Investing heavily in speculative stocks1</button></li>
+                        <li><button onclick="wrong_selection()">Avoiding investments altogether</button></li>
+                        <li><button onclick="right_selection(10)" value="10">Diversifying investments across different assets</button></li>
+                    </ul>
+                    <button class="fourth-page-btn" >Next <i class="fas fa-caret-right"></i> </button>
+                </div>
+
+            </div>
+
+                <div class="que-cont cont-4">
+
+                    <div class="que que-16">
+                        <h1> &nbsp;<span>Q16-</span> &nbsp; &nbsp;Which of the following is an example of a tax-advantaged retirement account?</h1>
+                        <ul>
+                            <li><button onclick="right_selection(2)" value="2">Traditional Individual Retirement Account (IRA)</button></li>
+                            <li><button onclick="wrong_selection()"> Standard savings account</button></li>
+                            <li><button onclick="wrong_selection()">Regular brokerage account</button></li>
+                            <li><button onclick="wrong_selection()">High-yield savings account</button></li>
+                        </ul>
+                    </div>
+    
+                    <div class="que que-17">
+                        <h1> &nbsp;<span>Q17-</span> &nbsp; &nbsp;What is the recommended approach to handling credit card debt?</h1>
+                        <ul>
+                            <li><button onclick="wrong_selection()">Paying only the minimum balance each month</button></li>
+                            <li><button onclick="wrong_selection()">Ignoring the debt and hoping it goes away</button></li>
+                            <li><button onclick="right_selection(360)" value="360">Paying more than the minimum balance to reduce debt faster</button></li>
+                            <li><button onclick="wrong_selection()">Transferring the debt to another credit card</button></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="que que-18">
+                        <h1> &nbsp;<span>Q18-</span> &nbsp; &nbsp;What is the purpose of a will?</h1>
+                        <ul>
+                            <li><button onclick="wrong_selection()">Minimizing taxes during one's lifetime</button></li>
+                            <li><button onclick="wrong_selection()">Maximizing investment returns</button></li>
+                            <li><button onclick="right_selection(110)" value="110">Distributing assets after death</button></li>
+                            <li><button onclick="wrong_selection()">Establishing a retirement plan</button></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="que que-19">
+                        <h1> &nbsp;<span>Q19-</span> &nbsp; &nbsp;Which of the following is a sign of potential financial fraud?</h1>
+                        <ul>
+                            <li><button onclick="wrong_selection()">Secure online transactions</button></li>
+                            <li><button onclick="right_selection(195)" value="195">Requests for personal information via email</button></li>
+                            <li><button onclick="wrong_selection()">Regular communication from a financial institution</button></li>
+                            <li><button onclick="wrong_selection()">Verified transactions in bank statements</button></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="que que-20">
+                        <h1> &nbsp;<span>Q20-</span> &nbsp; &nbsp;What is the recommended approach to financial planning?</h1>
+                        <ul>
+                            <li><button onclick="wrong_selection()">Making impulsive financial decisions</button></li>
+                            <li><button onclick="wrong_selection()">Neglecting to track expenses and income</button></li>
+                            <li><button onclick="wrong_selection()"> Focusing solely on short-term goals</button></li>
+                            <li><button onclick="right_selection(4)" value="4">Seeking professional advice</button></li>
+                        </ul>
+                        <button class="fifth-page-btn" >Next <i class="fas fa-caret-right"></i> </button>
+                    </div>
+    
+                </div>
+
+            </main>
+            
+            <div class="result-page">
+                <h1>your result is here</h1>
+                <ul>
+                    <li>Name: <span class="username"></span> </li>
+                    <li>id: <span class="userid"></span> </li>
+                    <li>total-que: <span>20</span> </li>
+                    <li>correct-que: <span class="correct_que"></span> </li>
+                    <li>wrong-que: <span class="wrong_que"></span> </li>
+                    <li>attempted-que: <span class="att_que"></span></li>
+                    <li>status: <span class="status"></span> </li>
+                </ul>
+                <b>Share your result</b>
+                <ol>
+                    <li><i class="fab fa-facebook-f"></i></li>
+                    <li><i class="fab fa-twitter"></i></li>
+                    <li><i class="fab fa-instagram"></i></li>
+                    <li><i class="fab fa-whatsapp"></i></li>
+                </ol>
+            </div>
+
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

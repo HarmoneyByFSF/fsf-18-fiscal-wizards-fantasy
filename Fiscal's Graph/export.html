@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Export Transactions</title>
+  <style>
+    body {
+      background-color: #13293D;
+      color: #FFFFFF;
+    }
+
+    h1 {
+      color: #FFFFFF;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    button {
+      color: #FFFFFF;
+      background-color: #0D1B26;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    button:hover {
+      cursor: pointer;
+      background-color: #0A141D;
+    }
+  </style>
+</head>
+<body>
+  <h1>Export Transactions</h1>
+
+  <button onclick="exportTransactions()">Export CSV</button>
+  <button onclick="goBack()">Go Back</button>
+
+  <script>
+    // Retrieve transactions from local storage
+    const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+    const exportTransactions = () => {
+      if (transactions.length === 0) {
+        alert('No transactions available to export.');
+        return;
+      }
+
+      const csvContent = "data:text/csv;charset=utf-8," +
+        "Date,Type,Label,Amount\n" +
+        transactions.map(transaction =>
+          `${transaction.date},${transaction.type},${transaction.label},${transaction.amount}`
+        ).join("\n");
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', 'transactions.csv');
+      document.body.appendChild(link); // Required for Firefox
+      link.click();
+    };
+
+    const goBack = () => {
+      window.history.back();
+    };
+  </script>
+</body>
+</html>

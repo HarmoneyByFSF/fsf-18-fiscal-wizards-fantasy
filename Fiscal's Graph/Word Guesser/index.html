@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Guess the Word Game (FINANCE EDITION)</title>
+  <style>
+    body {
+      background-color: #13293D;
+      color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: #FFFFFF;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
+    }
+
+    .image-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    #guessContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    #guessInput {
+      padding: 5px;
+      margin-left: 5px;
+    }
+
+    #submitButton {
+      color: #FFFFFF;
+      background-color: #0D1B26;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    #submitButton:hover {
+      cursor: pointer;
+      background-color: #0A141D;
+    }
+
+    #score {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    #result {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    #summary {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    #nextButtonContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    #nextButton {
+      color: #FFFFFF;
+      background-color: #0D1B26;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      display: none;
+    }
+
+    #nextButton:hover {
+      cursor: pointer;
+      background-color: #0A141D;
+    }
+  </style>
+</head>
+<body>
+  <h1>Guess the Word Game (FINANCE EDITION)</h1>
+  <div id="imageContainer" class="image-container"></div>
+  <div id="guessContainer">
+    <label for="guessInput">Enter your guess:</label>
+    <input type="text" id="guessInput">
+    <button id="submitButton" onclick="checkGuess()">Submit</button>
+  </div>
+  <div id="score"></div>
+  <div id="result"></div>
+  <div id="summary"></div>
+  <div id="nextButtonContainer">
+    <button id="nextButton" onclick="nextWord()">Next Word</button>
+  </div>
+
+  <script>
+    const words = [
+      {
+        word: "assets",
+        images: ["assets/ass.jpeg", "assets/set1.png"],
+        summary: "Assets are things of value that a person or company owns, which can be used to generate income or provide future benefits."
+      },
+      {
+        word: "debt",
+        images: ["debt/debt2.jpg", "debt/debt3.jpg", "debt/debt4.jpg"],
+        summary: "Debt is an amount of money borrowed by one party from another. It is usually repaid with interest."
+      },
+      {
+        word: "budget",
+        images: ["budget/budget1.jpg", "budget/budget.jpg", "budget/budget4.webp"],
+        summary: "A budget is a financial plan that helps individuals or organizations track income and expenses over a specific period."
+      },
+      {
+        word: "interest",
+        images: ["interest/interest1.jpg", "interest/interest2.jpg"],
+        summary: "Interest is the cost of borrowing money or the return on investment. It is typically expressed as a percentage over a specific period."
+      },
+      {
+        word: "investment",
+        images: ["investment/invest1.jpg", "investment/invest2.jpg", "investment/invest3.jpg"],
+        summary: "Investment refers to the allocation of resources, such as money or time, with the expectation of generating income or profit in the future."
+      }
+    ];
+
+    let currentWordIndex = 0;
+    let score = 0;
+
+    function showImages() {
+      const imageContainer = document.getElementById("imageContainer");
+      const currentWord = words[currentWordIndex];
+      const images = currentWord.images.map(image => `<img src="${image}">`);
+      imageContainer.innerHTML = images.join("");
+    }
+
+    function checkGuess() {
+      const guessInput = document.getElementById("guessInput");
+      const guess = guessInput.value.toLowerCase();
+      const currentWord = words[currentWordIndex];
+      const scoreElement = document.getElementById("score");
+      const resultElement = document.getElementById("result");
+      const summaryElement = document.getElementById("summary");
+      const nextButton = document.getElementById("nextButton");
+
+      if (guess === currentWord.word) {
+        score++;
+        scoreElement.textContent = "Score: " + score;
+        resultElement.textContent = "Correct!";
+        summaryElement.textContent = currentWord.summary;
+        nextButton.style.display = "block";
+      } else {
+        resultElement.textContent = "Wrong! Try again.";
+        summaryElement.textContent = "";
+        nextButton.style.display = "none";
+      }
+
+      guessInput.value = "";
+    }
+
+    function nextWord() {
+      const resultElement = document.getElementById("result");
+      const summaryElement = document.getElementById("summary");
+      const nextButton = document.getElementById("nextButton");
+
+      // Move to the next word
+      currentWordIndex++;
+      if (currentWordIndex < words.length) {
+        showImages();
+        resultElement.textContent = "";
+        summaryElement.textContent = "";
+        nextButton.style.display = "none";
+      } else {
+        resultElement.textContent = "Game Over! Your final score: " + score;
+        summaryElement.textContent = "";
+        nextButton.style.display = "none";
+        // You can perform other actions or reset the game here
+      }
+    }
+
+    // Start the game by showing the images for the first word
+    showImages();
+  </script>
+</body>
+</html>
